@@ -92,3 +92,7 @@ ENV/
 *.sublime-project
 *.sublime-workspace
 guerledan.sublime-workspace
+
+# ROS ws
+ros_ws/build/
+ros_ws/devel/
