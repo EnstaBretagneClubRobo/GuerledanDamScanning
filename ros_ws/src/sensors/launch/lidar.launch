@@ -1,0 +1,6 @@
+<!-- Launches the Hokuyo Node -->
+<launch>
+
+	<node name="lidar" pkg="hokuyo_node" type="hokuyo_node"/>
+	
+</launch>

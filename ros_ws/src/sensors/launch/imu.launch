@@ -1,0 +1,10 @@
+<!-- Mission de suivi de waypoints -->
+<!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
+<launch>
+	<arg name="usb" default="0"/>
+
+    <node pkg="razor_imu_9dof" type="imu_node.py" name="imu_boat">
+      <param name="port" value="/dev/ttyUSB$(arg usb)"/>
+    </node>
+
+</launch>
