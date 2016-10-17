@@ -46,7 +46,7 @@ def keys_cb(msg, twist_pub):
 
 if __name__ == '__main__':
     rospy.init_node('keys_to_twist')
-    twist_pub = rospy.Publisher('/robot/motion', Twist, queue_size=1)
+    twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     rospy.Subscriber('keys', String, keys_cb, twist_pub)
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
