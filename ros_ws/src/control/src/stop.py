@@ -2,15 +2,14 @@
 import rospy
 from geometry_msgs.msg import Twist
 
-rospy.init_node('regulation')
+rospy.init_node('stop')
 
 cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
 cmd = Twist()
-cmd.linear.x = 0.5
+cmd.linear.x = 0
 
 rate = rospy.Rate(1)
-
 while not rospy.is_shutdown():
     cmd_pub.publish(cmd)
     rate.sleep()
