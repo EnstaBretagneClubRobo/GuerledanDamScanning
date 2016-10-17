@@ -1,0 +1,12 @@
+<!-- Mission de suivi de waypoints -->
+<!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
+<launch>
+	<arg name="key_publi" default="0"/>
+
+    <node pkg="control" type="key_publisher.py" name="key_pub">
+    </node>
+
+    <node pkg="control" type="key_to_twist_morse.py" name="teleop">
+    </node>
+
+</launch>
