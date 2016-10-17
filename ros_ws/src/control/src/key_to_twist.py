@@ -10,10 +10,10 @@ vmax = 5
 rotmax = 5
 
 key_mapping = {
-    'z': [vmax, 0],  # avant
-    'q': [0, vmax],  # gauche
-    'd': [0, -vmax],  # droite
-    's': [-vmax, 0],  # arriere
+    'w': [0.1, 0],  # avant
+    'a': [0, 0.1],  # gauche
+    'd': [0, -0.1],  # droite
+    's': [-0.1, 0],  # arriere
     ' ': [0, 0],    # stop
 }
 
@@ -28,8 +28,17 @@ def keys_cb(msg, twist_pub):
         speed = 0
         rot = 0
     else:
-        speed = vels[0]
-        rot = vels[1]
+        speed += vels[0]
+        rot += vels[1]
+
+    if speed >= 5:
+        speed = 5
+    elif speed <= -5:
+        speed = -5
+    if rot >= 5:
+        rot = 5
+    elif rot <= -5:
+        rot = -5
 
     t = Twist()
     t.linear.x = speed
@@ -44,14 +53,25 @@ def keys_cb(msg, twist_pub):
     # twist_pub.publish(t)
 
 
+def sign(x):
+    if x > 0:
+        return 1
+    elif x < 0:
+        return -1
+    else:
+        return 0
+
+
 if __name__ == '__main__':
     rospy.init_node('keys_to_twist')
     twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     rospy.Subscriber('keys', String, keys_cb, twist_pub)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(5)
     while not rospy.is_shutdown():
+        speed = speed - 0.1 * sign(speed)
+        rot = rot - 0.1 * sign(rot)
         t = Twist()
-        t.linear.x = 0
-        t.angular.z = 0
+        t.linear.x = speed
+        t.angular.z = rot
         twist_pub.publish(t)
         rate.sleep()
