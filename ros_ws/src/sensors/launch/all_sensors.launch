@@ -1,14 +1,14 @@
 <!-- Launches the All Sensors Node -->
 <launch>
-<!-- 
+
 	<node name="lidar" pkg="hokuyo_node" type="hokuyo_node">
 		<param name="port" type="string" value="/dev/hokuyo"/>
 	</node>
 
 	<node name="camera" pkg="sensors" type="camera.py">
-		<param name="campath" type="string" value="/dev/camera"/>
+		<param name="campath" type="string" value="/dev/video0"/>
 	</node>
- -->
+
 	<node name="gps" pkg="sensors" type="nmea_serial_driver">
 		<param name="port" type="string" value="/dev/gps"/>
 		<param name="baud" value="4800"/>

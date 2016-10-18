@@ -37,7 +37,7 @@ bridge = CvBridge()
 # Publisher
 pub = rospy.Publisher('camera/image', Image, queue_size=1)
 # Capture object
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print 'Error while opening: ' + cam_path
