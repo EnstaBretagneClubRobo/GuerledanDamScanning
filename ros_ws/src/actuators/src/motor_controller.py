@@ -24,7 +24,20 @@ def set_param_motor():
     servo.setAccel(1, 150)
 
 
+def get_param(name, default):
+    try:
+        v = rospy.get_param(name)
+        rospy.loginfo('Found parameter %s, value %s' % (name, str(v)))
+    except KeyError:
+        v = default
+        rospy.logwarn(
+            'Cannot find parameter %s, assigning default: %s' % (name, str(v)))
+    return v
+
+
+port = get_param('~port', '/dev/pololu')
 servo = maestro.Controller(0)    # faire attention au port
+# servo = maestro.Controller(0, serial_port=port)    # faire attention au port
 set_param_motor()
 
 sub = rospy.Subscriber('cmd_diff', Vector3, set_cmd)

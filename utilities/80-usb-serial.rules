@@ -1,0 +1,11 @@
+# Xsens IMU
+SUBSYSTEM=="tty*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="d38b", ATTRS{serial}=="XSUCLZE1", SYMLINK+="xsens_imu"
+
+# GPS
+KERNEL=="ttyUSB*", ATTRS{manufacturer}=="Prolific Technology Inc.", ATTRS{idVendor}=="067b", SYMLINK+="gps"
+
+# Hokuyo
+KERNEL=="ttyACM*", ATTRS{idVendor}=="15d1", ATTRS{manufacturer}=="Hokuyo Data Flex for USB", SYMLINK+="hokuyo"
+
+# Camera
+KERNEL=="video*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="0826", SYMLINK+="camera"

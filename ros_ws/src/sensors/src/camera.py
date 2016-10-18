@@ -9,6 +9,18 @@ from sensor_msgs.msg import Image
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 
+
+def get_param(name, default):
+    try:
+        v = rospy.get_param(name)
+        rospy.loginfo('Found parameter %s, value %s' % (name, str(v)))
+    except KeyError:
+        v = default
+        rospy.logwarn(
+            'Cannot find parameter %s, assigning default: %s' % (name, str(v)))
+    return v
+
+
 # Initiate node
 rospy.init_node('video_capture')
 
@@ -16,16 +28,16 @@ rospy.init_node('video_capture')
 rate = rospy.Rate(10)
 
 # Camera path
-cam_path = '/dev/video0'
+cam_path = get_param('~campath', '/dev/camera')
+print cam_path
 
 # Bridge object
 bridge = CvBridge()
 
 # Publisher
 pub = rospy.Publisher('camera/image', Image, queue_size=1)
-
 # Capture object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 if not cap.isOpened():
     print 'Error while opening: ' + cam_path

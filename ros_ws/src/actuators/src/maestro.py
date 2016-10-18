@@ -27,9 +27,12 @@ class Controller:
     # ports, then you can specify the port number when intiating a controller
     # object. Ports will typically start at 0 and count by twos.  So with two
     # controllers ports 0 and 2 would be used.
-    def __init__(self, port=0):
+    def __init__(self, port=0, serial_port=None):
         # Open the command port
-        ttyStr = '/dev/ttyACM' + str(port)
+        if serial_port is None:
+            ttyStr = '/dev/ttyACM' + str(port)
+        else:
+            ttyStr = serial_port
         self.usb = serial.Serial(ttyStr)
         # Command lead-in and device 12 are sent for each Pololu serial
         # commands.
