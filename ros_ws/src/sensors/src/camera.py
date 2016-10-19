@@ -49,7 +49,7 @@ else:
 rval, frame = cap.read()
 while rval and not rospy.is_shutdown():
     rval, frame = cap.read()
-    print frame.shape
+    # print frame.shape
     retval, frame = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
     try:
         pub.publish(bridge.cv2_to_imgmsg(frame, "mono8"))

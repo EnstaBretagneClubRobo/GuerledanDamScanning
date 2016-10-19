@@ -35,9 +35,10 @@ def get_param(name, default):
     return v
 
 
-port = get_param('~port', '/dev/pololu')
-servo = maestro.Controller(1)    # faire attention au port
-# servo = maestro.Controller(0, serial_port=port)    # faire attention au port
+sPort = get_param('~sPort', '/dev/pololu')
+port = get_param('~port', 0)
+servo = maestro.Controller(int(port))    # faire attention au port
+# servo = maestro.Controller(0, serial_port=sPort)    # faire attention au port
 set_param_motor()
 
 sub = rospy.Subscriber('cmd_diff', Vector3, set_cmd)

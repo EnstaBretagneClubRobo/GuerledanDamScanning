@@ -5,7 +5,7 @@
 		<param name="port" type="string" value="/dev/hokuyo"/>
 	</node>
 
-	<node name="camera" pkg="sensors" type="camera.py">
+	<node name="camera" pkg="sensors" type="camera.py" output="screen">
 		<param name="campath" type="string" value="/dev/video0"/>
 	</node>
 
@@ -14,7 +14,7 @@
 		<param name="baud" value="4800"/>
 	</node>
 
-	<node name="imu" pkg="xsens_driver" type="mtnode.py" output="screen" >
+	<node name="imu" pkg="xsens_driver" type="mtnode.py" >
 		<param name="device" type="string" value="/dev/xsens_imu"/>
 	</node>
 </launch>

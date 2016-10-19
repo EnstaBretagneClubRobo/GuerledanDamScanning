@@ -1,7 +1,7 @@
 <!-- Mission de suivi de waypoints -->
 <!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
 <launch>
-	<arg name="key_publi" default="0"/>
+	<arg name="pololu" default="0"/>
 
     <node pkg="control" type="key_publisher.py" name="key_pub">
     </node>
@@ -12,6 +12,7 @@
     <node pkg="actuators" type="differential_real.py" name="differential"/>
 
     <node pkg="actuators" type="motor_controller.py" name="motor_controller">
-    	<param name="port" type="string" value="/dev/pololu"/>
+    	<param name="sPort" type="string" value="/dev/pololu"/>
+    	<param name="port" type="string" value="$(arg pololu)"/>
     </node>
 </launch>
