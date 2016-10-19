@@ -36,7 +36,7 @@ def get_param(name, default):
 
 
 port = get_param('~port', '/dev/pololu')
-servo = maestro.Controller(0)    # faire attention au port
+servo = maestro.Controller(1)    # faire attention au port
 # servo = maestro.Controller(0, serial_port=port)    # faire attention au port
 set_param_motor()
 

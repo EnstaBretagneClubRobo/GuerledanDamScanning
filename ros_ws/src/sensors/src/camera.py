@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-# Read & Publish the camera feed
+# Read & Compress & Publish the camera feed
 
 
 import rospy
@@ -35,7 +35,7 @@ print cam_path
 bridge = CvBridge()
 
 # Publisher
-pub = rospy.Publisher('camera/image', Image, queue_size=1)
+pub = rospy.Publisher('camera/image/compressed', Image, queue_size=1)
 # Capture object
 cap = cv2.VideoCapture(0)
 
@@ -47,10 +47,12 @@ else:
 
 # Publishing the frame
 rval, frame = cap.read()
-while rval:
+while rval and not rospy.is_shutdown():
     rval, frame = cap.read()
+    print frame.shape
+    retval, frame = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
     try:
-        pub.publish(bridge.cv2_to_imgmsg(frame, "bgr8"))
+        pub.publish(bridge.cv2_to_imgmsg(frame, "mono8"))
         # cv2.imdecode(frame2,1) a rajouter en sortie
     except CvBridgeError as e:
         print e
