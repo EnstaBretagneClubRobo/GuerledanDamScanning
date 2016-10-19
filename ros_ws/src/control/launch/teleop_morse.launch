@@ -7,8 +7,9 @@
     </node>
 
     <node pkg="control" type="key_to_twist.py" name="teleop">
+    	<remap from="cmd_vel" to="/robot/motion"/>
     </node>
 
-    <node pkg="actuators" type="differential_morse.py" name="differential"/>
+    <!-- <node pkg="actuators" type="differential_morse.py" name="differential"/> -->
 
 </launch>
