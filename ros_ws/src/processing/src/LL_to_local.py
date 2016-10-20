@@ -21,15 +21,16 @@ def deg2rad(deg):
     return deg * pi / 180
 
 
-def ll2local(lat0, lon0, lat, lon, rho):
-    x = rho * deg2rad(lat - lat0)
-    y = rho * cos(deg2rad(lat)) * deg2rad(lon - lon0)
+def ll2local(lat0, lon0, lat, lon):
+    R = 6371000
+    x = R * deg2rad(lat - lat0)
+    y = R * cos(deg2rad(lat)) * deg2rad(lon - lon0)
     return [x, y]
 
 
 def update_pose(msg):
     global pos
-    y, x = ll2local(LAT0, LON0, msg.latitude, msg.longitude, R)
+    y, x = ll2local(LAT0, LON0, msg.latitude, msg.longitude)
     print x, y
 
     pos.header.stamp = rospy.Time.now()
@@ -44,17 +45,18 @@ def update_orientation(msg):
     pos.pose.orientation = msg.orientation
 
 
-rospy.init_node('Local_publisher')
+if __name__ == '__main__':
+    rospy.init_node('Local_publisher')
 
-sub_gps = rospy.Subscriber('gps', NavSatFix, update_pose)
-sub_imu = rospy.Subscriber('imu/data', Imu, update_orientation)
-pub = rospy.Publisher('gps/local_pose', PoseStamped, queue_size=1)
+    sub_gps = rospy.Subscriber('gps', NavSatFix, update_pose)
+    sub_imu = rospy.Subscriber('imu/data', Imu, update_orientation)
+    pub = rospy.Publisher('gps/local_pose', PoseStamped, queue_size=1)
 
-pos = PoseStamped()
-pos.header.frame_id = 'world'
-rate = rospy.Rate(50)
+    pos = PoseStamped()
+    pos.header.frame_id = 'world'
+    rate = rospy.Rate(50)
 
-while not rospy.is_shutdown():
-    pos.header.stamp = rospy.Time.now()
-    pub.publish(pos)
-    rate.sleep()
+    while not rospy.is_shutdown():
+        pos.header.stamp = rospy.Time.now()
+        pub.publish(pos)
+        rate.sleep()

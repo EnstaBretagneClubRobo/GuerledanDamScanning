@@ -5,11 +5,15 @@
 # #############################################################################
 
 # Wall GPS coordinates
-start_wall_lat: '48.7481568'
-start_wall_long: '-4.826710'
 
-end_wall_lat: '48.7481568'
-end_wall_long: '-4.826710'
+wall_center_lat: '48.19513'
+wall_center_long: '-3.01798'
+
+wall_start_lat: '48.194260'
+wall_start_long: '-3.017179'
+
+wall_end_lat: '48.195344'
+wall_end_long: '-3.018396'
 
 # Distance to the wall
 required_wall_dist: 4
