@@ -27,6 +27,8 @@ bridge = CvBridge()
 
 # Subscriber
 sub = rospy.Subscriber('camera/image/compressed', Image, update_image)
+# Subscriber
+pub = rospy.Publisher('camera/image/decompressed', Image, queue_size=1)
 
 frame = np.ndarray(0)
 flag = False
@@ -35,6 +37,11 @@ print 'hello'
 while not rospy.is_shutdown():
     if flag:
         frame2 = cv2.imdecode(frame, 1)
-        cv2.imshow('Image decompressed', frame2)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        frame2 = cv2.flip(frame2, 0)
+        try:
+            pub.publish(bridge.cv2_to_imgmsg(frame2, "bgr8"))
+        except CvBridgeError as e:
+            print e
+        # cv2.imshow('Image decompressed', frame2)
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+            # break
