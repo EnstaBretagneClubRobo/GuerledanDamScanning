@@ -10,12 +10,9 @@ from math import atan, pi
 import tf
 
 
-def update_heading(msg):
-    global headingR
-    q = msg.orientation
-    q = [q.x, q.y, q.z, q.w]
-    headingR = tf.transformations.euler_from_quaternion(q)[2]
-
+def update_err_d(msg):
+    global eD
+    eD = msg.data
 
 def update_err_d(msg):
     global eD
@@ -45,9 +42,7 @@ cmd = Twist()
 
 rate = rospy.Rate(1)
 while not rospy.is_shutdown():
-    # cmd.angular.z = - K1 * ecap + K2 * atan(eD)
-    cmd.angular.z = K * (atan(eD) - headingR)
-    # print ecap, atan(eD), K1 * ecap, K2 * atan(eD)
+    cmd.angular.z = - K1 * ecap + K2 * atan(eD)
     cmd.linear.x = v
     # if abs(eD) > 1:
     #     cmd.linear.x = v / abs(eD)
