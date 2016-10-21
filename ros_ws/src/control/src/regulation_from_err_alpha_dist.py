@@ -4,19 +4,18 @@ This regulateur is just a template and publish a forward command only
 """
 import rospy
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import Imu
 from std_msgs.msg import Float32
-from math import atan, pi
-import tf
+from math import atan, pi, tan
 
 
 def update_err_d(msg):
     global eD
     eD = msg.data
 
-def update_err_d(msg):
-    global eD
-    eD = msg.data
+
+def update_err_cap(msg):
+    global ecap
+    ecap = msg.data
 
 
 rospy.init_node('regulation_cap')
@@ -31,18 +30,21 @@ D : distance calculee
 """
 cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 imu_sub = rospy.Subscriber('err_d', Float32, update_err_d)
-gps_sub = rospy.Subscriber('imu/data', Imu, update_heading)
+gps_sub = rospy.Subscriber('err_cap', Float32, update_err_cap)
 
 
-headingR, eD = 0, 0
+ecap, eD = 0, 0
 
-K = 10 / pi
+K = -10 / pi
 v = 5.0
 cmd = Twist()
 
 rate = rospy.Rate(1)
 while not rospy.is_shutdown():
-    cmd.angular.z = - K1 * ecap + K2 * atan(eD)
+    err = ecap - atan(eD)
+    err = err / 2
+    cmd.angular.z = K * atan(tan((err)))
+    print ecap, atan(eD)
     cmd.linear.x = v
     # if abs(eD) > 1:
     #     cmd.linear.x = v / abs(eD)

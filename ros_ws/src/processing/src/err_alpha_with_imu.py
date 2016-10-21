@@ -13,12 +13,13 @@ import tf
 
 def calc_err_alpha(msg):
     global xs, ys, xe, ye
-    alpha_wall = np.arctan2(ye - ys, xe - xs)
+    alpha_wall = np.arctan2(ye - ys, xe - xs) - np.pi / 2
     q = msg.orientation
     q = [q.x, q.y, q.z, q.w]
     alpha_boat = tf.transformations.euler_from_quaternion(q)[2]
     err_cap = alpha_wall - alpha_boat
     err_cap_pub.publish(err_cap)
+    print 'cap mur: {}, cap reel: {}'.format(alpha_wall, alpha_boat)
 
 
 # Useful coordinates
