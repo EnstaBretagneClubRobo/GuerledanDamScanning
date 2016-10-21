@@ -4,7 +4,7 @@ This regulateur is just a template and publish a forward command only
 """
 import rospy
 import tf
-from geometry_msgs.msg import Twist,Quaternion
+from geometry_msgs.msg import Twist, Quaternion
 from std_msgs import Float32
 from sensor_msgs import Imu
 
@@ -19,15 +19,15 @@ def update_cmd(msg):
 
 def update_cap_des(msg)
     global capm
-    capd=msg.data
+    capd = msg.data
 
 
 def update_imu(msg)
     global capr
     Qr = Quaternion()
     Qr = msg.data
-    capr= tf.transformations.euler_from_quaternion(Qr)[2]
-    
+    capr = tf.transformations.euler_from_quaternion(Qr)[2]
+
 
 rospy.init_node('regulation_cap')
 
@@ -39,17 +39,15 @@ capr : cap du robot
 Dd : distance désirée
 D : distance calculée
 """
-Dd=4
-K = -3.14/2
+Dd = 4
+K = -3.14 / 2
 cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 imu_sub = rospy.Subscriber('imu/data', Imu, update_imu)
 cap_sub = rospy.Subscriber('cap_des', Float32, update_cap_des)
 
 
-
-
 cmd = Twist()
-cmd.angular.z = capd-capr
+cmd.angular.z = capd - capr
 cmd.linear.x = v
 
 rate = rospy.Rate(1)
@@ -58,6 +56,4 @@ while not rospy.is_shutdown():
     rate.sleep()
 
 
-
-
-#imu/data
+# imu/data

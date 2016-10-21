@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Transforms cmd_vel to differential mode for a real robot that uses pololu
+"""
 import rospy
 from geometry_msgs.msg import Twist, Vector3
 

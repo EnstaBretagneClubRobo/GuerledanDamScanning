@@ -20,39 +20,25 @@ def update_err_cap(msg):
 
 rospy.init_node('regulation_cap')
 
-"""
-capm : orientation du mur/ligne
-capd : cap desire
-capr : cap du robot
-
-Dd : distance desiree
-D : distance calculee
-"""
 cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 imu_sub = rospy.Subscriber('err_d', Float32, update_err_d)
 gps_sub = rospy.Subscriber('err_cap', Float32, update_err_cap)
 
-
+# erreur en cap et en distance
 ecap, eD = 0, 0
 
 K = -3 / pi
-v = -5.0
+radius = 5      # largeur d'effet du suivi de ligne
+v = -5.0    # todo trouver pourquoi
 cmd = Twist()
-headingD = -atan(eD)
-rate = rospy.Rate(20)
-radius = 5
+
+rate = rospy.Rate(20)   # il faut avoir une bonne frequence
+
 while not rospy.is_shutdown():
-    err = ecap - atan(eD/radius)
-    err = err / 2
+    err = ecap - atan(eD / radius)
+    err = err / 2   # pour ramener de [-pi,pi] a [-pi/2,pi/2]
     cmd.angular.z = K * atan(tan((err)))
     print ecap, atan(eD)
     cmd.linear.x = v
-    # if abs(eD) > 1:
-    #     cmd.linear.x = v / abs(eD)
-    # else:
-    #     cmd.linear.x = v
     cmd_pub.publish(cmd)
     rate.sleep()
-
-
-# imu/data
