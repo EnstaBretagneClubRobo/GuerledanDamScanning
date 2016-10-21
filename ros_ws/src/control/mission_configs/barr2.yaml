@@ -1,0 +1,19 @@
+# #############################################################################
+# 
+#  Configuration for the wall following of Guerledan Dam
+# 
+# #############################################################################
+
+# Wall GPS coordinates
+
+wall_center_lat: 48.19513
+wall_center_long: -3.01798
+
+wall_start_lat: 48.1955066667
+wall_start_long: -3.01812
+
+wall_end_lat: 48.195195
+wall_end_long: -3.0175466666
+
+# Distance to the wall
+required_wall_dist: 4

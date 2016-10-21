@@ -35,13 +35,14 @@ gps_sub = rospy.Subscriber('err_cap', Float32, update_err_cap)
 
 ecap, eD = 0, 0
 
-K = -10 / pi
-v = 5.0
+K = -5 / pi
+v = -5.0
 cmd = Twist()
 headingD = -atan(eD)
-rate = rospy.Rate(1)
+rate = rospy.Rate(20)
+radius = 5
 while not rospy.is_shutdown():
-    err = ecap - atan(eD)
+    err = ecap - atan(eD/radius)
     err = err / 2
     cmd.angular.z = K * atan(tan((err)))
     print ecap, atan(eD)
