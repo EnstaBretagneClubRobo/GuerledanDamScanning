@@ -39,14 +39,15 @@ gps_sub = rospy.Subscriber('imu/data', Imu, update_heading)
 
 headingR, eD = 0, 0
 
-K = 10 / pi
+K = 10 / (3 * pi)
 v = 5.0
 cmd = Twist()
-
+headingD = -atan(eD)
 rate = rospy.Rate(1)
 while not rospy.is_shutdown():
     # cmd.angular.z = - K1 * ecap + K2 * atan(eD)
-    cmd.angular.z = K * (atan(eD) - headingR)
+    #cmd.angular.z = K * (atan(eD) + headingR)
+    cmd.angular.z = K * (headingD - headingR)
     # print ecap, atan(eD), K1 * ecap, K2 * atan(eD)
     cmd.linear.x = v
     # if abs(eD) > 1:

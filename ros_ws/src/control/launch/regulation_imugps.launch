@@ -3,9 +3,6 @@
 <launch>
     <rosparam command="load" file="$(find control)/mission_configs/barrage-guerledan.yaml" />
 
-    <node pkg="processing" type="err_alpha_with_imu.py" name="err_alpha_with_imu" output="screen">
-    </node>
-
     <node pkg="processing" type="err_dist_with_gps.py" name="err_dist_with_gps" output="screen">
     </node>
 
