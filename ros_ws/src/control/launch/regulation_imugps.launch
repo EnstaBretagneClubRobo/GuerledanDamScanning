@@ -2,7 +2,7 @@
 <!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
 <launch>
 	<arg name="pololu" default="0"/>
-    <rosparam command="load" file="$(find control)/mission_configs/barr2.yaml" />
+    <rosparam command="load" file="$(find control)/mission_configs/barrage-guerledan.yaml" />
 
     <node pkg="processing" type="err_dist_with_gps.py" name="err_dist_with_gps" output="screen">
     </node>

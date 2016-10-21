@@ -35,7 +35,7 @@ gps_sub = rospy.Subscriber('err_cap', Float32, update_err_cap)
 
 ecap, eD = 0, 0
 
-K = -5 / pi
+K = -3 / pi
 v = -5.0
 cmd = Twist()
 headingD = -atan(eD)
