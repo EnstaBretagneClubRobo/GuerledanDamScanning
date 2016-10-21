@@ -24,6 +24,9 @@ def dist_droite(x, y, xa, ya, xb, yb):
     """
     Renvoie la distance d'un point (x,y) par rapport a la droite definie
      par A(xa,ya) et B(xb,yb)
+    #
+     distance > 0: a gauche (vers le barrage si xs est en bas)
+     distance < 0: a droite
     """
     if xa == xb and ya == yb:
         return 0
@@ -34,18 +37,18 @@ def dist_droite(x, y, xa, ya, xb, yb):
 
 
 # Useful coordinates
-center_lat = rospy.get_param('~wall_center_lat', 48.19513)
-center_long = rospy.get_param('~wall_center_long', -3.01798)
+center_lat = rospy.get_param('wall_center_lat', 48.00000)
+center_long = rospy.get_param('wall_center_long', -3.00000)
 
-start_lat = rospy.get_param('~wall_start_lat', 48.194260)
-start_long = rospy.get_param('~wall_start_long', -3.017179)
+start_lat = rospy.get_param('wall_start_lat', 48.00000)
+start_long = rospy.get_param('wall_start_long', -3.00000)
 ys, xs = ll2local(center_lat, center_long, start_lat, start_long)
 
-end_lat = rospy.get_param('~wall_end_lat', 48.195344)
-end_long = rospy.get_param('~wall_end_long', -3.018396)
+end_lat = rospy.get_param('wall_end_lat', 48.00000)
+end_long = rospy.get_param('wall_end_long', -3.00000)
 ye, xe = ll2local(center_lat, center_long, end_lat, end_long)
 
-desired_distance_to_wall = rospy.get_param('~required_wall_dist', 4)
+desired_distance_to_wall = rospy.get_param('required_wall_dist', 0)
 
 rospy.init_node('err_dist_calculator')
 

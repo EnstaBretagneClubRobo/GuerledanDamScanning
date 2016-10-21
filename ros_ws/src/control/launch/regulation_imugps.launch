@@ -1,0 +1,18 @@
+<!-- Mission de suivi de waypoints -->
+<!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
+<launch>
+    <rosparam command="load" file="$(find control)/mission_configs/barrage-guerledan.yaml" />
+
+    <node pkg="processing" type="err_alpha_with_imu.py" name="err_alpha_with_imu" output="screen">
+    </node>
+
+    <node pkg="processing" type="err_dist_with_gps.py" name="err_dist_with_gps" output="screen">
+    </node>
+
+    <node pkg="control" type="regulation_from_err_alpha_dist.py" name="regulation" output="screen">
+    </node>
+
+    <node pkg="actuators" type="differential_real.py" name="cmd_to_diff" output="screen">
+    </node>
+
+</launch>
