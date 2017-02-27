@@ -4,11 +4,26 @@ Calcul of the distance to a line using gps, and the line coordinates
 """
 
 import rospy
-from LL_to_local import ll2local
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Float32
 import numpy as np
 import tf
+from math import pi, cos
+
+# --------------------------------------------------------------------------------
+# utilities
+# --------------------------------------------------------------------------------
+
+
+def deg2rad(deg):
+    return deg * pi / 180
+
+
+def ll2local(lat0, lon0, lat, lon):
+    R = 6371000
+    x = R * deg2rad(lat - lat0)
+    y = R * cos(deg2rad(lat)) * deg2rad(lon - lon0)
+    return [x, y]
 
 
 def calc_err_alpha(msg):
@@ -35,7 +50,7 @@ end_long = rospy.get_param('wall_end_long', -3.000000)
 ye, xe = ll2local(center_lat, center_long, end_lat, end_long)
 
 # Init node
-rospy.init_node('err_dist_calculator')
+rospy.init_node('err_alpha_calculator')
 
 # Subscriber and publisher
 gps_sub = rospy.Subscriber('imu/data', Imu, calc_err_alpha)

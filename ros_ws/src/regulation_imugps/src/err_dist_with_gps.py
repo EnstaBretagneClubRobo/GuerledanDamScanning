@@ -4,12 +4,27 @@ Calcul of the distance to a line using gps, and the line coordinates
 """
 
 import rospy
-from LL_to_local import ll2local
 from sensor_msgs.msg import NavSatFix
 from std_msgs.msg import Float32
 import numpy as np
 from numpy.linalg import det
 from numpy.linalg import norm
+from math import pi, cos
+
+# --------------------------------------------------------------------------------
+# utilities
+# --------------------------------------------------------------------------------
+
+
+def deg2rad(deg):
+    return deg * pi / 180
+
+
+def ll2local(lat0, lon0, lat, lon):
+    R = 6371000
+    x = R * deg2rad(lat - lat0)
+    y = R * cos(deg2rad(lat)) * deg2rad(lon - lon0)
+    return [x, y]
 
 
 def calc_dist(msg):

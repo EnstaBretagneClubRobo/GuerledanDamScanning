@@ -35,6 +35,7 @@ cmd = Twist()
 rate = rospy.Rate(20)   # il faut avoir une bonne frequence
 
 while not rospy.is_shutdown():
+    # error = cap(/mur) - cap_desire
     err = ecap - atan(eD / radius)
     err = err / 2   # pour ramener de [-pi,pi] a [-pi/2,pi/2]
     cmd.angular.z = K * atan(tan((err)))

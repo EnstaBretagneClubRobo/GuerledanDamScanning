@@ -2,6 +2,7 @@
 import rospy
 from helpers import maestro
 from geometry_msgs.msg import Twist
+from math import pi
 
 # --------------------------------------------------------------------------------
 # Initialisation du noeud
@@ -20,8 +21,11 @@ servo = maestro.Controller()
 
 def cmd_servo(msg):
     global servo
-    print msg.angular.z
-    servo.setTarget(5, int(msg.angular.z))
+    # les commandes sont comprises entre -pi/2 et pi/2
+    # donc on les ramene a 4000;8000]
+    cmd = 6000 + msg.angular.z * 4000 / pi
+    print msg.angular.z, int(cmd)
+    servo.setTarget(5, int(cmd))
 
 
 sub = rospy.Subscriber('cmd_vel', Twist, cmd_servo)
