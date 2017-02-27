@@ -1,0 +1,2 @@
+geometry_msgs/Point entry
+geometry_msgs/Point exit
