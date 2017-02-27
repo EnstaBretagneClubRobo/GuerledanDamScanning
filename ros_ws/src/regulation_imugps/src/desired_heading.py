@@ -4,18 +4,19 @@ This regulateur is just a template and publish a forward command only
 """
 import rospy
 import tf
-from geometry_msgs.msg import Twist,Quaternion
+from geometry_msgs.msg import Twist, Quaternion
+from std_msgs.msg import Float32
 from sensor_msgs import Imu
 
 
-def update_dist(msg)
+def update_dist(msg):
     global D
-    D = msg.data-Dd
+    D = msg.data - Dd
 
 
-def update_cap(msg)
+def update_cap(msg):
     global capm
-    capm=msg.data
+    capm = msg.data
 
 
 rospy.init_node('desired_heading')
@@ -37,8 +38,7 @@ if D < -1.0:
 elif D > 1.0:
     D = 1.0
 K = 2.0
-capd = capm+K*D
-
+capd = capm + K * D
 
 
 rate = rospy.Rate(1)

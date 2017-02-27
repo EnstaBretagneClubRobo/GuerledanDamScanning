@@ -27,9 +27,9 @@ gps_sub = rospy.Subscriber('err_cap', Float32, update_err_cap)
 # erreur en cap et en distance
 ecap, eD = 0, 0
 
-K = -3 / pi
+K = -3 / pi     # rad/s
 radius = 5      # largeur d'effet du suivi de ligne
-v = -5.0    # todo trouver pourquoi
+v = -5.0        # todo trouver pourquoi
 cmd = Twist()
 
 rate = rospy.Rate(20)   # il faut avoir une bonne frequence
