@@ -26,8 +26,8 @@ class Car(SimulationModel):
                       [np.sin(self.X[2]), np.cos(self.X[2]), self.X[1]],
                       [0, 0, 1]])
 
-        self.img = np.dot(R, self.img)
-        plt.plot(self.img[0], self.img[1])
+        img = np.dot(R, self.img)
+        return img
 
     def fdot(self, u):
         xdot = self.speed * u[1] * np.cos(self.X[2])
