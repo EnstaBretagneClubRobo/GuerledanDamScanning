@@ -97,7 +97,7 @@ robot.add_default_interface('socket')
 #
 # #############################################################################
 # PATH
-project_path = '/home/ejalaa12/Projects/GuerledanDamScanning/'
+project_path = '/Users/ejalaa/Documents/Projects/GuerledanDamScanning/Git_GuerledanDamScanning/'
 env_folder = 'morse_ws/environments/'
 file = 'outdoors_flat_empty.blend'
 # ENVIRONMENT
