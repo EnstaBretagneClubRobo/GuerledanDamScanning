@@ -41,7 +41,7 @@ def update_pose(msg):
     pose = msg
 
 
-pose_sub = rospy.Subscriber('car/pose', Pose2D, update_pose)
+pose_sub = rospy.Subscriber('position', Pose2D, update_pose)
 pose = Pose2D()
 
 

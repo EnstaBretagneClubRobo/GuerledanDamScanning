@@ -1,0 +1,12 @@
+<!-- Launches the All Sensors Node -->
+<launch>
+
+	<node name="gps" pkg="sensors" type="nmea_serial_driver">
+		<param name="port" type="string" value="/dev/gps"/>
+		<param name="baud" value="4800"/>
+	</node>
+
+	<node name="imu" pkg="xsens_driver" type="mtnode.py" >
+		<param name="device" type="string" value="/dev/xsens_imu"/>
+	</node>
+</launch>

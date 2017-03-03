@@ -2,6 +2,7 @@
 import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+from math import pi
 
 # Middle speed and rotations
 speed = 0
@@ -24,36 +25,22 @@ def keys_cb(msg, twist_pub):
     if len(msg.data) == 0 or msg.data not in key_mapping.keys():
         return  # nothing to do, unknown key
     vels = key_mapping[msg.data[0]]
-    if msg.data == ' ':
-        # we reset the speed and rot
-        speed = 0
-        rot = 0
-    elif msg.data == 'f':
-        flag = not flag
-    else:
-        speed += vels[0]
-        rot += vels[1]
+    speed += vels[0]
+    rot += vels[1]
 
-    if speed >= 5:
-        speed = 5
-    elif speed <= -5:
-        speed = -5
-    if rot >= 5:
-        rot = 5
-    elif rot <= -5:
-        rot = -5
+    if speed >= pi / 2:
+        speed = pi / 2
+    elif speed <= -pi / 2:
+        speed = -pi / 2
+    if rot >= pi / 2:
+        rot = pi / 2
+    elif rot <= -pi / 2:
+        rot = -pi / 2
 
     t = Twist()
     t.linear.x = speed
     t.angular.z = rot
     twist_pub.publish(t)
-
-    # time.sleep(0.1)
-    # speed = 0
-    # rot = 0
-    # t.linear.x = speed
-    # t.angular.z = rot
-    # twist_pub.publish(t)
 
 
 def sign(x):
@@ -72,9 +59,6 @@ if __name__ == '__main__':
     rate = rospy.Rate(5)
     flag = False
     while not rospy.is_shutdown():
-        if not flag:
-            speed = speed - 0.1 * sign(speed)
-        rot = rot - 0.1 * sign(rot)
         t = Twist()
         t.linear.x = speed
         t.angular.z = rot

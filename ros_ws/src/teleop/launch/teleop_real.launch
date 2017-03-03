@@ -1,0 +1,13 @@
+<!-- Mission de suivi de waypoints -->
+<!-- <rosparam file="$(find sensors)/config/imu_boat.yaml" command="load"/> -->
+<launch>
+	<arg name="pololu" default="0"/>
+
+    <node pkg="teleop" type="key_publisher.py" name="key_pub">
+    </node>
+
+    <node pkg="teleop" type="key_to_twist.py" name="teleop">
+    </node>
+
+    <node pkg="actuators" type="steering_wheel_test_servo.py" name="servo_controller"/>
+</launch>

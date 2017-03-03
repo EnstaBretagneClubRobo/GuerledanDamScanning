@@ -1,0 +1,14 @@
+<!-- Launches the All Sensors Node -->
+<launch>
+
+	<node name="sim_char" pkg="simulation" type="sim_car.py"/>
+
+	<node name="regulation_line" pkg="regulation_imugps" type="regulation_line.py">
+		<remap from="position" to="car/pose" />
+	</node>
+	
+	<node name="navigation_line" pkg="regulation_imugps" type="navigation_line.py">
+		<remap from="position" to="car/pose" />
+	</node>
+
+</launch>

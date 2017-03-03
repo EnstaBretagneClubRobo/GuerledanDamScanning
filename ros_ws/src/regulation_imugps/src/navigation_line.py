@@ -2,6 +2,24 @@
 import rospy
 from regulation_imugps.msg import Segment
 from geometry_msgs.msg import Point, Pose2D
+from math import pi, cos
+
+
+# --------------------------------------------------------------------------------
+# Utilities
+# --------------------------------------------------------------------------------
+
+def deg2rad(deg):
+    return deg * pi / 180
+
+
+def ll2local(lat0, lon0, lat, lon):
+    R = 6371000
+    x = R * deg2rad(lat - lat0)
+    y = R * cos(deg2rad(lat)) * deg2rad(lon - lon0)
+    # x pointe vers le nord et y vers l'est et z vers le bas
+    return [x, y]
+
 
 # --------------------------------------------------------------------------------
 # Node init
@@ -11,6 +29,7 @@ rospy.init_node('Navigation_line')
 # --------------------------------------------------------------------------------
 # List of Points to follow
 # --------------------------------------------------------------------------------
+
 pts = [Point(x=40, y=40),
        Point(x=40, y=-40),
        Point(x=-40, y=-40),
@@ -39,7 +58,7 @@ def update_line(msg):
         cline = segs[iseg]
 
 
-sub = rospy.Subscriber('car/pose', Pose2D, update_line)
+sub = rospy.Subscriber('position', Pose2D, update_line)
 
 
 # --------------------------------------------------------------------------------
